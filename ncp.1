@@ -1,0 +1,48 @@
+.TH NCP 1 "October 2026" "ncp 1.0"
+.SH NAME
+ncp \- network copy: download a URL to a file
+.SH SYNOPSIS
+.B ncp
+.RB [ \-cq ]
+.RB [ \-o
+.IR file ]
+.I url
+.SH DESCRIPTION
+.B ncp
+downloads
+.I url
+over HTTP or HTTPS and saves it to a file named after the last part of
+the URL path, or
+.B index.html
+if the path ends in a slash.
+Redirects are followed, up to ten.
+.PP
+HTTPS certificates are verified against
+.IR /etc/pki/tls/certs/ca-bundle.crt .
+If that file does not exist,
+.B ncp
+prints a warning and does not verify the server.
+.SH OPTIONS
+.TP
+.B \-c
+Continue a partial download, starting from the size of the existing file.
+.TP
+.BI \-o " file"
+Save to
+.I file
+instead of the name taken from the URL.
+.TP
+.B \-q
+Quiet: do not show progress. Errors and warnings are still printed.
+.SH EXIT STATUS
+0 on success, 1 on any error.
+.SH EXAMPLES
+.nf
+ncp https://www.nano-editor.org/dist/v8/nano-8.6.tar.xz
+ncp -c https://example.com/big.iso
+ncp -q -o page.html https://example.com/
+.fi
+.SH SEE ALSO
+.BR cp (1),
+.BR wget (1),
+.BR curl (1)
